@@ -1,0 +1,88 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/oif-flag-code/flag-code.html">
+<link rel="import" href="../../bower_components/paper-dropdown-input/paper-dropdown-input.html">
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<dom-module id="form-app">
+    <template>
+        <custom-style>
+            <style is="custom-style" include="iron-flex iron-flex-alignment">
+                .button {
+                    @apply --layout-self-center;
+                    padding: 40px 80px;
+
+                }
+            </style>
+            <style>
+                :host {
+                    display: block;
+                    width:400px;
+                    margin: auto;
+                }
+                .container {
+                    padding: 0 16px;
+                }
+                paper-button.indigo {
+                    background-color: var(--paper-indigo-500);
+                    color: white;
+                    --paper-button-raised-keyboard-focus: {
+                        background-color: var(--paper-pink-a200) !important;
+                        color: white !important;
+                    };
+                }
+                .header{
+                    font-size:18px;
+                    text-align:center;
+                }
+            </style>
+        </custom-style>
+
+        <p class="header"><strong>Зарегистрируйтесь</strong> и начинайте продавать услуги через интернет сегодня</p>
+        <div class='container'>
+            <div class="layout horizontal  flex-center-align">
+                <paper-input style='margin-right: 10px;'  label='Имя' auto-validate required pattern="[а-яА-Я]*" value="{{firstName}}"></paper-input>
+                <paper-input label='Фамилия' auto-validate required pattern="[а-яА-Я]*" value="{{lastName}}"></paper-input>
+            </div>
+
+
+            <paper-dropdown-input style="width:100%;"  label="Выберите профессию" value="{{prof}}"
+                                  items='["Программист","Специалист","Тимлид","Разработчик","Бэкэнд разработчик","Фронтенд Разработчик"]' auto-validate required>
+
+            </paper-dropdown-input>
+            <flag-code style="width:100%;"  value="{{phone}}"></flag-code>
+            <div class="button">
+                <paper-button raised class="indigo" on-click="_req">Зарегистрироваться</paper-button>
+            </div>
+        </div>
+    </template>
+    <script type="text/javascript">
+        Polymer({
+            is: 'form-app',
+            properties: {
+               
+            },
+
+            _req: function () {
+                if (false === this._validate()) {
+                    console.log("FALSE");
+                    return;
+                } else {
+                    console.log("GUT" );
+                }
+
+            },
+            _validateEmpty: function (val) {
+                return val != null && val != undefined && val != '';
+            },
+            _validate: function () {
+                return this._validateEmpty(this.firstName)
+                        && this._validateEmpty(this.lastName)
+                        && this._validateEmpty(this.prof)
+                        && this._validateEmpty(this.phone);
+            }
+
+        });
+    </script>
+</dom-module>
